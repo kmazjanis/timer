@@ -1,0 +1,10 @@
+.wrap{
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+
+#main{
+    border: 1px solid black;
+    padding: 5px;
+}

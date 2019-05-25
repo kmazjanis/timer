@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Time matchine</title>
+        <meta name="description" content="Timer">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="wrap">
+                    <div id="main">
+                        
+                    </div>
+                    <div class="buttons">  
+                        <button onclick="startTime()">Save start time</button>
+                        <button onclick="stopTime()">Save stop time</button>
+                        <button onclick="difInTime()">Time dif in sec</button>
+                    </div>
+                  <div class="outputs">
+                        <div id="startingTimeOutput"></div>
+                        <div id="stopingTimeOutput"></div>
+                  </div>
+                  <div>
+                        <input type="textfield" id="fbinputText" placeholder="Type"/>
+                        <input type="textfield" id="fbinputText2" placeholder="How long"/>
+                  </div>
+                  
+                  <div> 
+                        <button id="fbButtonId">Click</button>
+                        <button id="LfbButtonId">Load</button>
+                  </div>
+                 
+                  <div id="fbOutput">
+                      test
+                      
+                  </div>
+                <div>
+                    <button id="fbButtonId2" onclick="fbButton()">Store</button>
+                </div>
+                  
+                    
+             </div>
+        
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#config-web-app -->
+
+        <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBaU-CZ417AW2ycxTSlKcXN9flCxSHbW5Q",
+            authDomain: "timer-5de0c.firebaseapp.com",
+            databaseURL: "https://timer-5de0c.firebaseio.com",
+            projectId: "timer-5de0c",
+            storageBucket: "timer-5de0c.appspot.com",
+            messagingSenderId: "650093844092",
+            appId: "1:650093844092:web:32506754f71a408e"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+        </script>
+
+        <script src="javascript.js"></script>
+    </body>
+</html>
