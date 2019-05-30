@@ -15,43 +15,97 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <div id="signupDiv" style="display: none"> <!-- style display none, becouse when refreshing, firsts HTML and links runs in to the DOM then fire base after split sec understands that we are logged in. thus for a small glitz-->
+            <h3>Signup</h3>
+            <form id="signupForm">
+              <input type="email" id="signup-email"/>
+              <input type="password" id="signup-password"/>
+              <button> Sign up</button>
+            </form>
+            
+        </div>
+      
+        <br>
+      
+        <div id="loginDiv" style="display: none">
+          <h3>Login</h3>
+          <form id="loginForm">
+            <input type="email" id="login-email"/>
+            <input type="password" id="login-password"/>
+            <button>Log in</button>
+          </form>
+          
+      </div>
+      
+      <br>
+      
+      <div id="logoutDiv" style="display: none">
+        <div class="logout">
+          <h3>Your in! Just log out idiot!</h3>
+          <button id="logout">Click to log out</button>
+      </div>
+      
         <div class="wrap">
                     <div id="main">
-                        
                     </div>
+
                     <div class="buttons">  
-                        <button onclick="startTime()">Save start time</button>
-                        <button onclick="stopTime()">Save stop time</button>
-                        <button onclick="difInTime()">Time dif in sec</button>
+                        <button onclick="startTime()">Start</button>
+                        <button onclick="stopTime(), difInTime()">Stop</button>
+                        <!-- <button onclick="difInTime()">Time dif in sec</button> -->
+                        <span>Type: </span>
+                        <select id="fbinputText">
+                            <option value="running">Running</option>
+                            <option value="kaking">Kaking</option>
+                            <option value="reading">Reading</option>
+                            <option value="hacking">Hacking</option>
+                            <option value="coding">Coding</option>
+                        </select>
                     </div>
-                  <div class="outputs">
-                        <div id="startingTimeOutput"></div>
-                        <div id="stopingTimeOutput"></div>
-                  </div>
-                  <div>
-                        <input type="textfield" id="fbinputText" placeholder="Type"/>
-                        <input type="textfield" id="fbinputText2" placeholder="How long"/>
-                  </div>
-                  
-                  <div> 
-                        <button id="fbButtonId">Click</button>
-                        <button id="LfbButtonId">Load</button>
-                  </div>
-                 
-                  <div id="fbOutput">
-                      test
-                      
-                  </div>
-                <div>
-                    <button id="fbButtonId2" onclick="fbButton()">Store</button>
+
+                
+
+                <div class="outputs">
+                        <span>Starting time: </span><span id="startingTimeOutput"></span><br>
+                        <span>Stoping time: </span><span id="stopingTimeOutput"></span><br>
+                        <span>Seconds doing: </span><span id="TimeDiff"></span><br><br>
+                        <span><button id="fbButtonId2" onclick="fbButton()">Store</button></span>
+                        
+                        
+                        
                 </div>
-                  
-                    
-             </div>
+                
+               
+               
+                
+                <!-- <div> 
+                        <button id="fbButtonId">Save</button>
+                        <button id="LfbButtonId">Load</button>
+                </div> -->
+                
+                <!-- <div id="fbOutput">
+                    test
+                </div> -->
+                
+               
+
+                <!-- Get data from db and display -->
+                <div>
+                    <fieldset>
+                        <legend>This week</legend>
+                        <div id="statsOutput"></div>
+                        
+                    </fieldset>
+                    <button onclick="getStats()">Get stats</button>
+                </div>
+                
+            </div>
+        </div>
         
 
         <!-- The core Firebase JS SDK is always required and must be listed first -->
         <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
 
         <!-- TODO: Add SDKs for Firebase products that you want to use
@@ -70,7 +124,8 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        
+        const auth = firebase.auth(); //has to be before js/index/js
+        const db = firebase.firestore();
         </script>
 
         <script src="javascript.js"></script>

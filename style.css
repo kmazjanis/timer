@@ -1,10 +1,40 @@
 .wrap{
     display: grid;
     place-items: center;
-    height: 100vh;
+    height: 70vh;
 }
 
 #main{
     border: 1px solid black;
     padding: 5px;
 }
+
+body{
+    background-color: rgb(184, 141, 141);
+  }
+  
+  .logout{
+    background-color: rgb(235, 241, 243);
+    width:300px;
+    border-radius:6px;
+    margin: 0 auto 0 auto;
+    padding:0px 0px 50px 15px;
+    border: #2980b9 4px solid; 
+  }
+  
+  #signupDiv, #loginDiv{
+    background-color: rgb(235, 241, 243);
+    width:300px;
+    border-radius:6px;
+    margin: 0 auto 0 auto;
+    padding:0px 0px 70px 15px;
+    border: #2980b9 4px solid; 
+  }
+
+  .outputs{
+    border: rgba(25, 140, 248, 0.904) 2px solid;
+    border-radius:3px;
+    padding: 15px;
+    background-color: aliceblue;
+  }
+

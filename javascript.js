@@ -1,75 +1,3 @@
-// setTimeout(()=> {
-//     console.log("Hello, after 2sec");
-// },
-//     2*1000
-// );
-
-
-// const time = () => {
-//     console.log("hello 2.5sec, not inline function");
-// };
-
-// setTimeout(time, 2.5*1000)
-
-
-
-// const rocks = who =>{
-//     console.log(who + " rocks");
-// }
-
-// setTimeout(rocks, 3*1000, "node.js")
-
-
-
-// const chal = temp => {
-//     console.log("Hello after "+ temp + "seconds");
-    
-// }
-
-// setTimeout(chal, 4000, "4");
-// setTimeout(chal, 8000, "8");
-
-
-// setInterval(
-//     () => console.log('Hello every 3 seconds'),
-//     3000
-//   );
-
-
-//   const timerId = setTimeout(
-//     () => console.log('You will not see this one!'),
-//     1
-//   );
-//   clearTimeout(timerId);
-
-
-//   setTimeout(
-//     () => console.log('Hello after 0.5 seconds. MAYBE!'),
-//     500,
-//   );
-
-//   var count = 0;
-//   setInterval(
-//     () => console.log('Hello every 3 seconds', count++),
-//     3000
-//   );
-
-//     var loop = 0;
-//     let result = 0;
-//     for(i=0; i<10; i++){
-//         result = loop + i;
-//         console.log(result);
-//     }
-//   document.getElementById("main").innerHTML = "time: " + result;
-
-//   function doThings() {
-//     //the things i want to happen (or increment)
-//  }
- 
-//  setTimeout(function() {
-//      doThings();
-//  }, 1000);
-
 
 var myVar = setInterval(myTimer, 1000);
 
@@ -80,10 +8,21 @@ var myVar = setInterval(myTimer, 1000);
     }
 
   function startTime(){
-    let date1 = new Date().toLocaleTimeString('en-GB');
-    document.getElementById("startingTimeOutput").innerHTML = date1;
-    console.log(date1);
+    
+    let time = new Date().toLocaleTimeString('en-GB'); //get only time from date
+    
+    
+    document.getElementById("startingTimeOutput").innerHTML = time;
+    window.localStorage.setItem("time", time); //Saving start time in localstorage for later use.
   }
+
+  ///SAVING DATA IN LOCAL STORAGE FROM LAST FIRST SAVED TIME
+  window.onload = function (){
+    let fromlocal = window.localStorage.getItem('date');
+    document.getElementById("startingTimeOutput").innerHTML = fromlocal;
+  }
+
+
 
   function stopTime(){
     let date2 = new Date().toLocaleTimeString('en-GB');
@@ -100,50 +39,58 @@ var myVar = setInterval(myTimer, 1000);
     var date1 =  document.getElementById("startingTimeOutput").innerHTML
     var date2 =  document.getElementById("stopingTimeOutput").innerHTML
     var seconds = parseTime(date2) - parseTime(date1);
-    console.log(seconds);
+    document.getElementById("TimeDiff").innerHTML = seconds;
   }
 
 
 firestore = firebase.firestore(); //ref to firestore
 
+
   //docuement reference
-const docRef = firestore.collection("collection").doc("doc");
+
 const output = document.querySelector("#fbOutput");
 const input= document.querySelector("#fbinputText");
 const button = document.querySelector("#fbButtonId");
 const Lbutton = document.querySelector("#LfbButtonId");
 
-button.addEventListener("click", function (){
-  const textToSave = input.value;
-  console.log("sss: " + textToSave);
-  docRef.set({status: textToSave}).then(function() {
-    console.log("status saved");
-  });
-});
+//CHANGE STATUS IN DB AND LOAD THIS STATUS FROM FIREBASE TO DOM
 
-Lbutton.addEventListener("click", function(){
-  docRef.get().then(function (doc){
-    if (doc && doc.exists){
-      const myData = doc.data();
-      output.innerHTML = "Something guys " + myData.status;
-    }
-  });
-});
+// button.addEventListener("click", function (){
+//   const textToSave = input.value;
+//   console.log("sss: " + textToSave);
+//   docRef.set({status: textToSave}).then(function() {
+//     console.log("status saved");
+//   });
+// });
+
+// Lbutton.addEventListener("click", function(){
+//   docRef.get().then(function (doc){
+//     if (doc && doc.exists){
+//       const myData = doc.data();
+//       output.innerHTML = "Something guys " + myData.status;
+//     }
+//   });
+// });
 
 
-
+///WRITE DATA TO FIREBASE
 
 function fbButton(){
   // var firebaseRef = database().ref();
   // firebaseRef.child("Text").set("somevalue")
 
   var type = document.getElementById("fbinputText").value;
-  var time = document.getElementById("startingTimeOutput").innerHTML;
-
+  var starttime = document.getElementById("startingTimeOutput").innerHTML;
+  var endtime = document.getElementById("stopingTimeOutput").innerHTML;
+  var timedif = document.getElementById("TimeDiff").innerHTML;
+  let Fulldate = new Date();
 
   firestore.collection("Work").doc().set({
       Type: type,
-      Time: time
+      StartTime: starttime,
+      EndTime: endtime,
+      TimeDiff: timedif,
+      Fulldate: Fulldate
   })
   .then(function() {
       console.log("Document successfully written!");
@@ -153,4 +100,161 @@ function fbButton(){
   });
 }
   
+
+///LOGIN IN
+
+auth.onAuthStateChanged(user => {
+   
+  if (user){
+      document.getElementById("loginDiv").style.display = "none";
+      document.getElementById("signupDiv").style.display = "none";
+      document.getElementById("logoutDiv").style.display = "block";
+      
+  }
+  else{
+      document.getElementById("loginDiv").style.display = "block";
+      document.getElementById("signupDiv").style.display = "block";
+      document.getElementById("logoutDiv").style.display = "none";
+  
+  }
+});
+
+
+//SIGNUP
+const signupForm = document.querySelector('#signupForm');
+
+signupForm.addEventListener('submit', (e) =>{
+  e.preventDefault();
+
+  //get user info
+  const email = signupForm['signup-email'].value;
+  const pass = signupForm['signup-password'].value;
+
+
+
+  //sign up the user
+  auth.createUserWithEmailAndPassword(email, pass).then(cred =>{ //takes time to complete so we need to wait
+      console.log(cred.user);
+      
+  }); 
+});
+
+//LOGOUT
+const logout = document.querySelector('#logout');
+logout.addEventListener('click', (e) =>{
+  e.preventDefault();
+  auth.signOut();
+  // .then(() =>{
+  //     console.log("user signed out");
+  //     document.getElementById("signupDiv").style.display = "visible";
+  //     document.getElementById("logoutDiv").style.display = "none";
+  //     document.getElementById("loginDiv").style.display = "visible";
+      
+  // });
+});
+
+//LOGIN
+const login = document.querySelector('#loginForm');
+login.addEventListener('submit', (e) =>{
+  e.preventDefault();
+
+  const email = login['login-email'].value;
+  const pass = login['login-password'].value;
+
+
+  auth.signInWithEmailAndPassword(email, pass).then(cred =>{
+      console.log(cred.user);
+  
+  });
+});
+
+///CREATE A COOKIE FOR STORING START TIME
+
+// function createCookie(key) {
+//   var cookie = key;  //escape removes all spaces, semicolas, commas becosuse strings cant caontain them.
+//   document.cookie = cookie;
+//   console.log(cookie);
+//   console.log("Creating new cookie with key: " + key);
+// }
+
+
+
+
+//create element and render to dom ?
+
+// function render(){
+//   let li = document.createElement('div');   //for each document we create a div tag
+//   let name = document.createElement('span');
+
+//   li.setAttribute('data-id', doc.id); //we set attribute for each id
+  
+//   name.textContent = doc.data().name;  
+
+//   li.appendChild(name);
+
+//   statsOut.appendChild(li);
+  
+// }
+
+
+///GET DATA FROM DB
+// function getStats(){
+
+  
+//   firestore.collection("Work").get().then((snapshot) => {  //snapshot of work collection
+//     snapshot.docs.forEach(doc =>{ //get all the doc from that collection then cycle through them with forEach
+//       // render(doc);  //for each document we call function "render" and passsing in doc as parameter
+//       console.log(doc.data().Type);
+//       console.log(doc.data().TimeDiff);
+  
+//       var test = doc.data().Type;
+      // var plainSeconds = doc.data().TimeDiff;
+      // var time = formatTime(plainSeconds);
+//       document.getElementById("statsOutput").style.display = "none";
+//       document.getElementById("statsOutput").innerHTML += "</br>" + test + " " + time;
+  
+//     });
+//   });
+// };
+const outputStats = document.querySelector("#statsOutput");
+
+db.collection("Work").onSnapshot(function(querySnapshot) {
+        querySnapshot.docChanges().forEach(function(change) {
+            if(change.type === "added"){
+              console.log(change.doc.data().Type);
+              var plainSeconds = change.doc.data().TimeDiff;
+              var time = formatTime(plainSeconds);
+              outputStats.innerHTML +=  "Type: " + change.doc.data().Type + " - " + time + "<br>";
+
+            }
+            
+        });
+        
+  });
+
+
+
+
+//FROM SECONDS BACK TO TIME FUNCTION
+function formatTime(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  return [
+    h,
+    m > 9 ? m : (h ? '0' + m : m || '0'),
+    s > 9 ? s : '0' + s,
+  ].filter(a => a).join(':');
+};
+
+
+
+
+// firestore.collection("Work").get().then(function(querySnapshot) {
+//   querySnapshot.forEach(function(doc) {
+//       // doc.data() is never undefined for query doc snapshots
+//       console.log(doc.data());
+      
+//   });
+// });
 
