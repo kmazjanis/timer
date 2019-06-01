@@ -38,3 +38,25 @@ body{
     background-color: aliceblue;
   }
 
+
+  #stats{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+      
+  }
+
+  #statsOutput{
+    background: rgba(235, 178, 23, 0.418);
+    width: 200px;
+    padding: 15px;
+    
+  }
+
+  #statsOutput2{
+    background: rgba(25, 201, 40, 0.514);
+    width: 200px;
+    padding: 15px;
+    
+  }
+  

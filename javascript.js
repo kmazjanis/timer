@@ -7,13 +7,11 @@ var myVar = setInterval(myTimer, 1000);
       document.getElementById("main").innerHTML = t;
     }
 
+  ///
   function startTime(){
-    
     let time = new Date().toLocaleTimeString('en-GB'); //get only time from date
-    
-    
     document.getElementById("startingTimeOutput").innerHTML = time;
-    window.localStorage.setItem("time", time); //Saving start time in localstorage for later use.
+    window.localStorage.setItem("date", time); //Saving start time in localstorage for later use.
   }
 
   ///SAVING DATA IN LOCAL STORAGE FROM LAST FIRST SAVED TIME
@@ -218,20 +216,44 @@ login.addEventListener('submit', (e) =>{
 // };
 const outputStats = document.querySelector("#statsOutput");
 
-db.collection("Work").onSnapshot(function(querySnapshot) {
-        querySnapshot.docChanges().forEach(function(change) {
-            if(change.type === "added"){
-              console.log(change.doc.data().Type);
-              var plainSeconds = change.doc.data().TimeDiff;
-              var time = formatTime(plainSeconds);
-              outputStats.innerHTML +=  "Type: " + change.doc.data().Type + " - " + time + "<br>";
 
-            }
-            
-        });
-        
+db.collection("Work").onSnapshot(function(querySnapshot) {
+        querySnapshot.docChanges().forEach(function(change, i) {
+         
+
+            if(change.type === "added"){       
+              if(change.doc.data().Type === 'running'){
+                var plainSeconds = change.doc.data().TimeDiff;
+                var time = formatTime(plainSeconds);
+                outputStats.innerHTML +=  "<span class='troll'>Type: " + change.doc.data().Type + " - " + time + "</span><br>";
+              }
+            }      
+        });        
   });
 
+  var Stats = document.getElementsByClassName('troll');
+
+    
+  console.log(Stats);
+
+
+
+
+
+
+
+
+// const outputStats2 = document.querySelector("#statsOutput2");
+
+// db.collection("Work").where("Type", "==", "running")
+//     .onSnapshot(function(querySnapshot) {
+//         querySnapshot.forEach(function(doc) {
+//             let first = doc.data().Type;
+//             let test = doc.data().TimeDiff;
+           
+//         });
+        
+//     });
 
 
 
