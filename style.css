@@ -39,6 +39,17 @@ body{
   }
 
 
+    /* Input form desgin */
+
+.content{
+  background-color: #2980b9;
+  padding: 25px 50px 25px 50px;
+}
+
+
+    /* Design for DB output */
+
+/* wrap for all stats */
   #stats{
     display: flex;
     flex-direction: row;
@@ -46,17 +57,37 @@ body{
       
   }
 
+/* box for stat list */
   #statsOutputBoxDesign{
-    background: rgba(235, 178, 23, 0.418);
+    /* background: rgba(235, 178, 23, 0.418); */
     width: 200px;
     padding: 15px;
     
   }
 
+  /* ul design */
+  #statsOutput{
+    background: rgba(151, 25, 201, 0.514);
+    width: 200px;
+    padding: 15px;
+    list-style-type: none;
+  }
+  
   #statsOutput2{
     background: rgba(25, 201, 40, 0.514);
     width: 200px;
     padding: 15px;
-    
+    list-style-type: none;
   }
+
+  /* delete btn */
+
+ .delete-btn{
+  display: inline-block;
+  Cursor: pointer;
+  width: 18px;
+  height: 17px;
+  background: url(delete-icn.svg) no-repeat center;
   
+}
+ 

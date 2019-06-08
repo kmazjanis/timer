@@ -69,6 +69,17 @@
                         <span>Seconds doing: </span><span id="TimeDiff"></span><br><br>
                         <span><button id="fbButtonId2" onclick="fbButton()">Store</button></span> 
                 </div>
+
+                <!-- Form for entering data -->
+                <div class="content">
+                    <form id="addForm">
+                        Manual adding
+                        <input type="text" name="type" placeholder="Type of work">
+                        <input type="text" name="time" placeholder="Time doing">
+                        <button>Add to db</button>
+                    </form>
+                </div>
+
         </div>  
                
 
@@ -76,11 +87,19 @@
             <div id="stats">
                 
                 <div id="statsOutputBoxDesign"><br>This weeek
+                    <div id="sumStatsOutput"></div>
                     <ul id="statsOutput">
                         
                     </ul>
                 </div>
-                <div id="statsOutput2">Next week</div>
+
+                <div id="statsOutputBoxDesign"><br>This weeek
+                    <div id="sumStatsOutput2"></div>
+                    <ul id="statsOutput2">
+                            
+                    </ul>
+                </div>
+            
             </div> 
         
         
