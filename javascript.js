@@ -136,17 +136,26 @@ db.collection("Work").where("TimeDiff", ">=", "1")
 });
 
 
+
  /// TEST - DISPLAY DB DATA TO HTML
+ let statsOutput = document.querySelector("#statsOutput");
+
  db.collection("Work")
+ .orderBy("Fulldate", "desc")
  .onSnapshot(function(snapshot) {
- 
+  
      snapshot.docChanges().forEach(function(change) {
       
          if (change.type === "added") {
-             let type = change.doc.data().TimeDiff;
+          
+         
+
              
-             let time = formatTime(type);
-             document.getElementById("statsOutput").innerHTML += `<li class="resultList"> Time: ${time} <span class="delete-btn"></span> </li> `;
+             let timedif = change.doc.data().TimeDiff;
+             let type = change.doc.data().Type;
+             let time = formatTime(timedif);
+             let id = change.doc.id;
+             document.getElementById("statsOutput").innerHTML += `<li data-id2='${id}'> <span> ${type} </span> / <span>${time}</span> <span class="delete-btn2"></span> </li> `;
             //  console.log("New doc added: ", change.doc.data());
          }
          if (change.type === "modified") {
@@ -154,19 +163,24 @@ db.collection("Work").where("TimeDiff", ">=", "1")
          }
          if (change.type === "removed") {
              console.log("Removed city: ", change.doc.data());
+             let statsOutput = statsOutput.querySelector('[data-id2=' + change.doc.id + ']'); // grap li tag with doc id where something is changed
+             test.removeChild(li);
+
          }
      });
  });
 
 
 /// TEST - Delete FROM DB
-const zzz = document.querySelector("#statsOutput");
-let getSome = document.getElementsByClassName("resultList");
-console.log(zzz);
-zzz.addEventListener('click', (e) =>{
-  e.stopPropagation();
-  let id = e.target.parentElement.getAttribute("resultList");
-})
+// const zzz = document.querySelector("#statsOutput");
+// let getSome = document.getElementsByClassName("resultList");
+// console.log(zzz);
+// zzz.addEventListener('click', (e) =>{
+//   e.stopPropagation();
+//   let id = e.target.parentElement.getAttribute("resultList");
+// })
+
+
 
 
 /// FROM SECONDS BACK TO TIME FUNCTION
@@ -197,7 +211,7 @@ function render(doc){
   li.setAttribute('data-id', doc.id);      // sets a ID from document to li
   cross.setAttribute('class', 'delete-btn');    
   typeR.textContent = doc.data().Type;          // adds type data from db to variable TypeR
-  timeR.textContent = ' ' + doc.data().TimeDiff;
+  timeR.textContent = ' ' + formatTime(doc.data().TimeDiff);
   cross.textContent = '';
 
   li.appendChild(typeR);                        // append aka put spans and data to li
@@ -205,7 +219,7 @@ function render(doc){
   li.appendChild(cross);
 
   test.appendChild(li);                         // append li to the docuemnt
-
+console.log("cross: " + cross);
 // deleting data
 cross.addEventListener('click', (e) =>{
   e.stopPropagation(); //stoping from buubling up
@@ -217,15 +231,32 @@ cross.addEventListener('click', (e) =>{
 
 }
 // gets data
-  db.collection('Work')
-  .orderBy('Fulldate', 'desc')           // order by date descending
-  .get()                                 // gets the database
-  .then((snapshot) =>{                   // then gets a snapshot of the database
-    snapshot.docs.forEach(doc => {       // eatch time around we get document 
-      console.log(doc.id);               // method data() turns to applicable data
-      render(doc);                       // for every individual document in db we launch function render()
-    }) 
-  });
+  // db.collection('Work')
+  // .orderBy('Fulldate', 'desc')           // order by date descending
+  // .get()                                 // gets the database
+  // .then((snapshot) =>{                   // then gets a snapshot of the database
+  //   snapshot.docs.forEach(doc => {       // eatch time around we get document 
+  //     console.log(doc.id);               // method data() turns to applicable data
+  //     render(doc);                       // for every individual document in db we launch function render()
+  //   }) 
+  // });
+
+//real time listener
+db.collection('Work')
+.orderBy('Fulldate', 'desc')
+.onSnapshot(snapshot => { // if something changes we want to callback to this onSnanpshot method. If something changes we receive a snapshot
+    let changes = snapshot.docChanges();   //detect changes with a method docChanges
+    changes.forEach(change => {   //
+      
+      if(change.type == 'added'){
+        render(change.doc); 
+      }
+      else if(change.type == 'removed'){
+        let li = test.querySelector('[data-id=' + change.doc.id + ']'); // grap li tag with doc id where something is changed
+        test.removeChild(li);
+      }
+    })
+}) 
 
 
   /// TEST - ADD DATA MANUAL FROM FORM

@@ -91,3 +91,12 @@ body{
   
 }
  
+ .delete-btn2{
+  display: inline-block;
+  Cursor: pointer;
+  width: 18px;
+  height: 17px;
+  background: url(delete-icn.svg) no-repeat center;
+  
+}
+ 
