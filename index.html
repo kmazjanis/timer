@@ -11,6 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style.css">
     </head>
+    
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
@@ -39,42 +40,45 @@
       
       <div id="logoutDiv" style="display: none">
         <div class="logout">
-          <h3>Your in! Just log out idiot!</h3>
-          <button id="logout">Click to log out</button>
+          <p>Your in! <span><button id="logout">Click to log out</button></span></p>
+          
       </div>
       
         <div class="wrap">
-                    <div id="main">
+                    <div class="outputs"> 
+                        <div id="main">
+                        </div><br>
+    
+                        <div class="buttons">  
+                            <button onclick="startTime()">Start</button>
+                            <button onclick="stopTime(), difInTime()">Stop</button>
+                            <!-- <button onclick="difInTime()">Time dif in sec</button> -->
+                            
+                        </div>
                     </div>
-
-                    <div class="buttons">  
-                        <button onclick="startTime()">Start</button>
-                        <button onclick="stopTime(), difInTime()">Stop</button>
-                        <!-- <button onclick="difInTime()">Time dif in sec</button> -->
-                        <span>Type: </span>
-                        <select id="fbinputText">
-                            <option value="running">Running</option>
-                            <option value="kaking">Kaking</option>
-                            <option value="reading">Reading</option>
-                            <option value="hacking">Hacking</option>
-                            <option value="coding">Coding</option>
-                        </select>
-                    </div>
-
+                   
                 
 
                 <div class="outputs">
                         <span>Starting time: </span><span id="startingTimeOutput"></span><br>
                         <span>Stoping time: </span><span id="stopingTimeOutput"></span><br>
                         <span>Seconds doing: </span><span id="TimeDiff"></span><br><br>
+                        <span>Type: </span>
+                            <select id="fbinputText">
+                                <option value="running">Running</option>
+                                <option value="kaking">Kaking</option>
+                                <option value="reading">Reading</option>
+                                <option value="hacking">Hacking</option>
+                                <option value="coding">Coding</option>
+                        </select>
                         <span><button id="fbButtonId2" onclick="fbButton()">Store</button></span> 
                 </div>
 
                 <!-- Form for entering data -->
-                <div class="content">
+                <div class="outputs">Manual adding
                     <form id="addForm">
-                        Manual adding
-                        <input type="text" name="type" placeholder="Type of work">
+                        
+                        <input type="text" name="type" placeholder="Type of work"><br>
                         <input type="text" name="time" placeholder="Time doing">
                         <button>Add to db</button>
                     </form>
@@ -84,21 +88,12 @@
                
 
                 <!-- Get data from db and display -->
-            <div id="stats">
-                
-                <div id="statsOutputBoxDesign"><br>This weeek
+            <div id="stats">      
+                <div id="statsOutputBoxDesign"><br>
                     <div id="sumStatsOutput"></div>
-                    <ul id="statsOutput">
-                        
+                    <ul id="statsOutput">                          
                     </ul>
                 </div>
-
-                <div id="statsOutputBoxDesign"><br>This week 2
-                    <div id="sumStatsOutput2"></div>
-                    <ul id="statsOutput2">                          
-                    </ul>
-                </div>
-            
             </div> 
         
         

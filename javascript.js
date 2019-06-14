@@ -131,55 +131,54 @@ db.collection("Work").where("TimeDiff", ">=", "1")
         const SecondsArray = temp.map(Number);
         const result = SecondsArray.reduce((a, b) => a + b); 
         
-        document.getElementById("sumStatsOutput").innerHTML = `Live result: ${formatTime(result)}`;
-        document.getElementById("sumStatsOutput2").innerHTML = `Live result: ${formatTime(result)}`;
+        document.getElementById("sumStatsOutput").innerHTML = `Total time: ${formatTime(result)}`;
+      
 });
 
 
 
  /// TEST - DISPLAY DB DATA TO HTML
- let statsOutput = document.querySelector("#statsOutput");
-
- db.collection("Work")
- .orderBy("Fulldate", "desc")
- .onSnapshot(function(snapshot) {
+//  let statsOutput = document.querySelector("#statsOutput");
+ 
+ 
+//  db.collection("Work")
+//  .orderBy("Fulldate", "desc")
+//  .onSnapshot(function(snapshot) {
   
-     snapshot.docChanges().forEach(function(change) {
+//      snapshot.docChanges().forEach(function(change) {
       
-         if (change.type === "added") {
-          
-         
+    
+    
 
+//          if (change.type === "added") {
              
-             let timedif = change.doc.data().TimeDiff;
-             let type = change.doc.data().Type;
-             let time = formatTime(timedif);
-             let id = change.doc.id;
-             document.getElementById("statsOutput").innerHTML += `<li data-id2='${id}'> <span> ${type} </span> / <span>${time}</span> <span class="delete-btn2"></span> </li> `;
-            //  console.log("New doc added: ", change.doc.data());
-         }
-         if (change.type === "modified") {
-             console.log("Modified city: ", change.doc.data());
-         }
-         if (change.type === "removed") {
-             console.log("Removed city: ", change.doc.data());
-             let statsOutput = statsOutput.querySelector('[data-id2=' + change.doc.id + ']'); // grap li tag with doc id where something is changed
-             test.removeChild(li);
+       
+//              let timedif = change.doc.data().TimeDiff;
+//              let type = change.doc.data().Type;
+//              let time = formatTime(timedif);
+//              let id = change.doc.id;
+//              document.getElementById("statsOutput").innerHTML += `<li data-id2='${id}'> <span> ${type} </span> / <span>${time}</span> <span class="delete-btn2"></span> </li> `;
+//             //  console.log("New doc added: ", change.doc.data());
+            
 
-         }
-     });
- });
+//          }
+//          if (change.type === "modified") {
+//              console.log("Modified: ", change.doc.data());
+//          }
+//          if (change.type === "removed") {
+//              console.log("Removed: ", change.doc.data());
+//              let li = statsOutput.querySelector('[data-id2=' + change.doc.id + ']'); // grab li tag with doc id where something is changed
+//              test.removeChild(li);
+
+//          }
+//      });
+//  });
 
 
-/// TEST - Delete FROM DB
-// const zzz = document.querySelector("#statsOutput");
-// let getSome = document.getElementsByClassName("resultList");
-// console.log(zzz);
-// zzz.addEventListener('click', (e) =>{
-//   e.stopPropagation();
-//   let id = e.target.parentElement.getAttribute("resultList");
-// })
-
+//  let cross2 = document.getElementById("statsOutput").childNodes[2];
+//  cross2.addEventListener('click', function(){
+//    console.log("hi");
+//  });
 
 
 
@@ -198,48 +197,36 @@ function formatTime(seconds) {
 
 /// TEST - DISPLAY DATA FROM DB WITH DOM USING FUNCTION
 
-const test = document.querySelector('#statsOutput2'); // # is for id
+const test = document.querySelector('#statsOutput'); // # is for id
 
 // create elemnts
 function render(doc){
-  let li = document.createElement('li');        // creating elements
-  let typeR = document.createElement('span');
-  let timeR = document.createElement('span');
-  let cross = document.createElement('span');   
+    let li = document.createElement('li');        // creating elements
+    let typeR = document.createElement('span');
+    let timeR = document.createElement('span');
+    let cross = document.createElement('span');   
 
- 
-  li.setAttribute('data-id', doc.id);      // sets a ID from document to li
-  cross.setAttribute('class', 'delete-btn');    
-  typeR.textContent = doc.data().Type;          // adds type data from db to variable TypeR
-  timeR.textContent = ' ' + formatTime(doc.data().TimeDiff);
-  cross.textContent = '';
+  
+    li.setAttribute('data-id', doc.id);      // sets a ID from document to li
+    cross.setAttribute('class', 'delete-btn');    
+    typeR.textContent = doc.data().Type;          // adds type data from db to variable TypeR
+    timeR.textContent = ' ' + formatTime(doc.data().TimeDiff);
+    cross.textContent = '';
 
-  li.appendChild(typeR);                        // append aka put spans and data to li
-  li.appendChild(timeR);
-  li.appendChild(cross);
+    li.appendChild(typeR);                        // append aka put spans and data to li
+    li.appendChild(timeR);
+    li.appendChild(cross);
+    
+    test.appendChild(li);                         // append li to the docuemnt
 
-  test.appendChild(li);                         // append li to the docuemnt
-console.log("cross: " + cross);
-// deleting data
-cross.addEventListener('click', (e) =>{
-  e.stopPropagation(); //stoping from buubling up
-  let id = e.target.parentElement.getAttribute('data-id'); // geting event target which is the cross then get parent of cross which is li and then get attribute from it
-  db.collection('Work').doc(id).delete();
-})
-
-
-
+  // deleting data
+  cross.addEventListener('click', (e) =>{
+    e.stopPropagation(); //stoping from buubling up
+    let id = e.target.parentElement.getAttribute('data-id'); // geting event target which is the cross then get parent of cross which is li and then get attribute from it
+    db.collection('Work').doc(id).delete();
+  })
 }
-// gets data
-  // db.collection('Work')
-  // .orderBy('Fulldate', 'desc')           // order by date descending
-  // .get()                                 // gets the database
-  // .then((snapshot) =>{                   // then gets a snapshot of the database
-  //   snapshot.docs.forEach(doc => {       // eatch time around we get document 
-  //     console.log(doc.id);               // method data() turns to applicable data
-  //     render(doc);                       // for every individual document in db we launch function render()
-  //   }) 
-  // });
+
 
 //real time listener
 db.collection('Work')
@@ -262,12 +249,16 @@ db.collection('Work')
   /// TEST - ADD DATA MANUAL FROM FORM
 
   const form = document.querySelector("#addForm");
+  let Fulldate = new Date();
+
 
 form.addEventListener('submit', (e) => {
+  console.log("did i add ?");
   e.preventDefault();                    // stop default action aka reloading page
   db.collection('Work').add({
       Type: form.type.value,
-      TimeDiff: form.time.value
+      TimeDiff: form.time.value,
+      Fulldate: Fulldate
   });
   form.type.value = ''; // empty the form             
   form.time.value = ''; // empty the form             

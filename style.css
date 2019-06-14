@@ -1,11 +1,12 @@
 .wrap{
     display: grid;
     place-items: center;
-    height: 70vh;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 150px 150px;
 }
 
 #main{
-    border: 1px solid black;
+    border: 1px solid rgba(128, 127, 127, 0.349);
     padding: 5px;
 }
 
@@ -15,27 +16,30 @@ body{
   
   .logout{
     background-color: rgb(235, 241, 243);
-    width:300px;
+    width: 95%;
     border-radius:6px;
     margin: 0 auto 0 auto;
-    padding:0px 0px 50px 15px;
+    padding: 0 10px 0 0;
     border: #2980b9 4px solid; 
+    text-align: right;
   }
   
   #signupDiv, #loginDiv{
     background-color: rgb(235, 241, 243);
-    width:300px;
+    width: 95%;
     border-radius:6px;
     margin: 0 auto 0 auto;
     padding:0px 0px 70px 15px;
     border: #2980b9 4px solid; 
   }
 
+  
   .outputs{
     border: rgba(25, 140, 248, 0.904) 2px solid;
     border-radius:3px;
     padding: 15px;
     background-color: aliceblue;
+    width: 210px;
   }
 
 
@@ -73,13 +77,6 @@ body{
     list-style-type: none;
   }
   
-  #statsOutput2{
-    background: rgba(25, 201, 40, 0.514);
-    width: 200px;
-    padding: 15px;
-    list-style-type: none;
-  }
-
   /* delete btn */
 
  .delete-btn{
@@ -91,12 +88,5 @@ body{
   
 }
  
- .delete-btn2{
-  display: inline-block;
-  Cursor: pointer;
-  width: 18px;
-  height: 17px;
-  background: url(delete-icn.svg) no-repeat center;
-  
-}
+
  
